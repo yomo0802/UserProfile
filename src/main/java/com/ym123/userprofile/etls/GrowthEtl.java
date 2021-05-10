@@ -108,7 +108,7 @@ public class GrowthEtl {
             vos.add(growthLineVo);
         }
 
-        //七天前,再之前的订单流水总和(GMV)
+        //优化 :七天前,再之前的订单流水总和(GMV)
         String preGmvSql = "select sum(origin_price) as totalGmv " +
                 "from ecommerce.t_order" +
                 "where create_time < '%s' ";
@@ -120,14 +120,21 @@ public class GrowthEtl {
         BigDecimal preGmv = BigDecimal.valueOf(previousGmv);
 
         //之前每天的增量gmv取出 ，依次叠加，得到总和
+        //遍历之前得到的每天数据，在preGmv的基础上叠加，得到gmv的总量
         ArrayList<BigDecimal> totalGmvList = new ArrayList<>();
+        BigDecimal currentGmv = preGmv;
 
         for (int i = 0; i < vos.size(); i++) {
 
-            GrowthLineVo growthLineVo = vos.get(i);
-            BigDecimal gmv = growthLineVo.getGmv();
+            //获取每天的统计数据
+/*            GrowthLineVo growthLineVo = vos.get(i);
+            currentGmv = currentGmv.add(growthLineVo.getGmv());//加上当前day的gmv新增量
+            growthLineVo.setGmv(currentGmv);*/
 
-            BigDecimal temp = gmv.add(preGmv);
+            GrowthLineVo growthLineVo = vos.get(i);
+            BigDecimal gmv = growthLineVo.getGmv(); //当前day的gmv
+
+            BigDecimal temp = gmv.add(preGmv); //加上 当前day的gmv
 
             for (int j = 0; j < i; j++) {
                 GrowthLineVo prev = vos.get(j);
