@@ -61,7 +61,8 @@ public class MemberEtl {
 
         //将List转换为流,对每一个元素依次遍历 转换为MemberSex
         List<MemberSex> result = list.stream()
-                .map(str -> JSON.parseObject(str, MemberSex.class)).collect(Collectors.toList());
+                .map(str -> JSON.parseObject(str, MemberSex.class))
+                .collect(Collectors.toList());
 
         return result;
     }
@@ -80,7 +81,8 @@ public class MemberEtl {
         List<String> list = dataset.toJSON().collectAsList();
 
         List<MemberChannel> result = list.stream()
-                .map(str -> JSON.parseObject(str, MemberChannel.class)).collect(Collectors.toList());
+                .map(str -> JSON.parseObject(str, MemberChannel.class))
+                .collect(Collectors.toList());
 
         return result;
     }
@@ -97,7 +99,8 @@ public class MemberEtl {
         List<String> list = dataset.toJSON().collectAsList();
 
         List<MemberMpSub> result = list.stream()
-                .map(str -> JSON.parseObject(str, MemberMpSub.class)).collect(Collectors.toList());
+                .map(str -> JSON.parseObject(str, MemberMpSub.class))
+                .collect(Collectors.toList());
 
         return result;
     }
@@ -134,7 +137,8 @@ public class MemberEtl {
 
         List<String> list = heat.toJSON().collectAsList();
         List<MemberHeat> result = list.stream()
-                .map(str -> JSON.parseObject(str, MemberHeat.class)).collect(Collectors.toList());
+                .map(str -> JSON.parseObject(str, MemberHeat.class))
+                .collect(Collectors.toList());
         //只有一行数据 获取后返回
         return result.get(0);
 
