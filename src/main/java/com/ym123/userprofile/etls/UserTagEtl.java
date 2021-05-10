@@ -25,6 +25,7 @@ public class UserTagEtl {
     public static void main(String[] args) {
 
         SparkSession session = SparkUtils.initSession();
+        //定义一个方法，将链表查询的结果存到es
         etl(session);
     }
 
